@@ -23,7 +23,8 @@
       "@/components/*": ["components/*"],
       "@/lib/*": ["src/lib/*"],
       "@/models/*": ["src/models/*"],
-      "@/lib/utils": ["src/lib/utils"]
+      "@/lib/utils": ["src/lib/utils"],
+      "@/auth": ["src/auth.ts"]
     }
   },
   "include": [
