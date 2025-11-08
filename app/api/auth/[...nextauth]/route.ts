@@ -1,11 +1,13 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import dbConnect from "../../../../src/lib/dbConnect" 
-import User from "../../../../src/models/user.model" 
+import dbConnect from "@/lib/dbConnect"
+import User from "@/models/user.model"
 import bcrypt from "bcryptjs"
 import { Session } from "next-auth"
 import { JWT } from "next-auth/jwt"
 
+// We will deconstruct GET and POST directly from the NextAuth call.
+// This is a cleaner pattern and fixes the Vercel build error.
 const handler = NextAuth({
     providers: [
         CredentialsProvider({
@@ -24,7 +26,7 @@ const handler = NextAuth({
                     }
                     const isPasswordCorrect = await user.comparePassword(credentials.password);
                     if (isPasswordCorrect) {
-                        return user; // This is passed to the 'jwt' callback
+                        return user; 
                     } else {
                         throw new Error("Incorrect password");
                     }
@@ -43,13 +45,13 @@ const handler = NextAuth({
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                token._id = user._id?.toString();
+                token._id = user._id?.toString(); 
             }
             return token;
         },
         async session({ session, token }: { session: Session, token: JWT }) {
             if (token && session.user) {
-                session.user._id = token._id;
+                session.user._id = token._id; 
             }
             return session;
         },
