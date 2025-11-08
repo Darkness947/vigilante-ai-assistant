@@ -6,9 +6,8 @@ import bcrypt from "bcryptjs"
 import { Session } from "next-auth"
 import { JWT } from "next-auth/jwt"
 
-// We will deconstruct GET and POST directly from the NextAuth call.
-// This is a cleaner pattern and fixes the Vercel build error.
-const handler = NextAuth({
+// 1. We deconstruct the 'handlers' object from the NextAuth result
+const { handlers } = NextAuth({
     providers: [
         CredentialsProvider({
             id: "credentials",
@@ -59,4 +58,5 @@ const handler = NextAuth({
     secret: process.env.NEXTAUTH_SECRET,
 });
 
-export { handler as GET, handler as POST };
+// 2. Now we export GET and POST from the 'handlers' object
+export const { GET, POST } = handlers;
