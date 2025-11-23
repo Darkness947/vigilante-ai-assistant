@@ -31,7 +31,7 @@ export default async function ChatPage(props: { params: Promise<{ chatId: string
     const chat = await Chat.findOne({
         _id: chatId,
         userId: session.user._id,
-    }); // <-- .select() is REMOVED. This is the fix.
+    }); 
 
     // 5. If chat doesn't exist, redirect
     if (!chat) {
