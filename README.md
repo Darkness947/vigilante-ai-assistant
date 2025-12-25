@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vigilante AI Assistant 🤖✨
 
-## Getting Started
+A premium, localized, and highly animated AI Assistant web interface built with **Next.js 14**, **TypeScript**, and **Tailwind CSS**.
 
-First, run the development server:
+## 🚀 Overview
+
+Vigilante AI is designed to be a "Dark Mode First" experience, offering a sleek, modern interface for an AI coding assistant. It features advanced animations, full English/Arabic (RTL) localization, and a responsive design optimized for both desktop and mobile performance.
+
+## ✨ Key Features
+
+*   **🎨 Premium UI**: Dark-themed aesthetic w/ rich gradients, glassmorphism, and noise textures.
+*   **🌍 Full Localization**: Native support for **English** and **Arabic**, including automatic RTL layout switching and specialized font handling.
+*   **⚡ Advanced Animations**:
+    *   **3D Code Demo**: Interactive, mouse-tilt parallax effect (Desktop).
+    *   **Typewriter Effect**: Dynamic, localized text cycling in the hero section.
+    *   **Tech Marquee**: Infinite scrolling loop of technology icons with hardware acceleration.
+    *   **Page Transitions**: Smooth staggered entrance animations for all elements.
+*   **📱 Mobile Optimized**:
+    *   Responsive Navbar with Hamburger Menu.
+    *   Performance-tuned animations (disabled 3D perspective & heavy blurs on mobile).
+    *   Touch-friendly interactables.
+*   **💬 Chat Interface**: A specialized chat layout with sidebar history, model selection, and message streaming simulation.
+*   **🛡️ Secure & Clean**: Read-only profile settings to prevent accidental edits, cleanly integrated authentication UI components.
+
+## 🛠️ Tech Stack
+
+*   **Framework**: [Next.js 14](https://nextjs.org/) (App Router)
+*   **Language**: [TypeScript](https://www.typescriptlang.org/)
+*   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+*   **Animations**: [Framer Motion](https://www.framer.com/motion/)
+*   **Icons**: [Lucide React](https://lucide.dev/)
+*   **Auth**: [NextAuth.js](https://next-auth.js.org/) (UI Integration)
+
+## 📂 Project Structure
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+vigilante-ai-assistant/
+├── app/                  # Next.js App Router pages
+│   ├── chat/             # Chat interface pages
+│   ├── contact/          # Contact page
+│   ├── login/            # Auth pages
+│   ├── globals.css       # Global styles & animation utilities
+│   └── layout.tsx        # Root layout with font/theme setup
+├── components/           # Reusable UI components
+│   ├── ui/               # Shadcn/UI base components (Button, Dialog, etc.)
+│   ├── HomePageClient.tsx# Main landing page logic
+│   ├── Navbar.tsx        # Responsive navigation
+│   ├── ChatSidebar.tsx   # Chat history sidebar
+│   └── ...
+├── src/
+│   └── lib/
+│       └── translations.ts # Centralized generic localization strings
+└── public/               # Static assets (images, logos)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/yourusername/vigilante-ai-assistant.git
+    cd vigilante-ai-assistant
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2.  **Install dependencies**:
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
 
-## Learn More
+3.  **Run the development server**:
+    ```bash
+    npm run dev
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+4.  **Open the app**:
+    Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🔮 Future Roadmap
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+*   [ ] Backend integration for real AI model responses (OpenAI/Gemini API).
+*   [ ] Database connection for persistent user profile & chat history.
+*   [ ] Voice input/output capabilities.
+*   [ ] File upload & analysis.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*Built with ❤️ by Hussain Alhumaidi*

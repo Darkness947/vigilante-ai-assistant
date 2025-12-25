@@ -1,19 +1,19 @@
 'use client';
 
-import { useState } from 'react'; 
+import { useState } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"; 
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { Loader2 } from 'lucide-react'; 
-import { motion } from 'framer-motion'; 
+import { Loader2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const formSchema = z.object({
     email: z.string().email("Please enter a valid email."),
@@ -67,15 +67,13 @@ export default function LoginPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
             >
-                <Card className="w-full max-w-md">
-                    <CardHeader>
-                        <CardTitle className="text-2xl">Login</CardTitle>
-                        {/* NEW: Added CardDescription */}
-                        <CardDescription>
-                            Welcome back! Log in to your account.
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
+                <div className="w-[90%] md:w-full md:max-w-xl bg-card border border-border rounded-xl shadow-lg p-6 md:p-8 relative z-10">
+                    <CardTitle className="text-2xl">Login</CardTitle>
+                    {/* NEW: Added CardDescription */}
+                    <CardDescription>
+                        Welcome back! Log in to your account.
+                    </CardDescription>
+                    <CardContent className="pt-6">
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                                 <FormField
@@ -96,11 +94,11 @@ export default function LoginPage() {
                                     name="password"
                                     render={({ field }) => (
                                         <FormItem>
-                                        <FormLabel>Password</FormLabel>
-                                        <FormControl>
-                                            <Input type="password" placeholder="••••••" {...field} disabled={isLoading} />
-                                        </FormControl>
-                                        <FormMessage />
+                                            <FormLabel>Password</FormLabel>
+                                            <FormControl>
+                                                <Input type="password" placeholder="••••••" {...field} disabled={isLoading} />
+                                            </FormControl>
+                                            <FormMessage />
                                         </FormItem>
                                     )}
                                 />
@@ -120,7 +118,7 @@ export default function LoginPage() {
                             </Link>
                         </div>
                     </CardContent>
-                </Card>
+                </div>
             </motion.div>
         </div>
     );

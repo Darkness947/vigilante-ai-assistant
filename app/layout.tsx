@@ -1,15 +1,20 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import AuthProvider from "@/components/AuthProvider";    
+import AuthProvider from "@/components/AuthProvider";
 import { Toaster } from "@/components/ui/sonner";
-import { ThemeProvider } from "@/components/ThemeProvider"; 
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { LanguageProvider } from "@/components/LanguageContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Vigilante AI Assistant",
   description: "AI assistant built with Next.js and Gemini",
+  icons: [
+    { rel: 'icon', url: '/logo.png' },
+    { rel: 'apple-touch-icon', url: '/logo.png' },
+  ],
 };
 
 export default function RootLayout({
@@ -23,16 +28,19 @@ export default function RootLayout({
         {/* 3. Wrap everything in ThemeProvider */}
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="dark"
+          forcedTheme="dark"
           disableTransitionOnChange
         >
           {/* 4. Wrap the main content in AuthProvider */}
           <AuthProvider>
-            <main>
-              {children}
-            </main>
-            <Toaster richColors />
+            {/* 5. Wrap with LanguageProvider */}
+            <LanguageProvider>
+              <main>
+                {children}
+              </main>
+              <Toaster richColors />
+            </LanguageProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>

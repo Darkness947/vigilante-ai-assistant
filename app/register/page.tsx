@@ -1,18 +1,18 @@
 'use client';
 
-import { useState } from 'react'; 
+import { useState } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"; 
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Loader2 } from 'lucide-react'; 
-import { motion } from 'framer-motion'; 
+import { Loader2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const formSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters"),
@@ -47,7 +47,7 @@ export default function RegisterPage() {
             const data = await response.json();
 
             if (data.success) {
-                toast.success("Registration successful!", {description: "You can now log in."});
+                toast.success("Registration successful!", { description: "You can now log in." });
                 router.push('/login');
             }
             else {
@@ -56,7 +56,7 @@ export default function RegisterPage() {
                 });
             }
         }
-      catch (error) {
+        catch (error) {
             toast.error("Error", {
                 description: "An unexpected error occurred.",
             });
@@ -73,7 +73,7 @@ export default function RegisterPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
             >
-                <Card className="w-full max-w-md">
+                <div className="w-[90%] md:w-full md:max-w-xl bg-card border border-border rounded-xl shadow-lg p-6 md:p-8 relative z-10">
                     <CardHeader>
                         <CardTitle className="text-2xl">Register</CardTitle>
                         {/* NEW: Added CardDescription */}
@@ -81,7 +81,7 @@ export default function RegisterPage() {
                             Create an account to get started with Vigilante AI.
                         </CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="pt-6">
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                                 <FormField
@@ -139,7 +139,7 @@ export default function RegisterPage() {
                             </Link>
                         </div>
                     </CardContent>
-                </Card>
+                </div>
             </motion.div>
         </div>
     );
