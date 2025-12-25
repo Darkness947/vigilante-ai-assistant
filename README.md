@@ -78,8 +78,6 @@ vigilante-ai-assistant/
 
 ## 🔮 Future Roadmap
 
-*   [ ] Backend integration for real AI model responses (OpenAI/Gemini API).
-*   [ ] Database connection for persistent user profile & chat history.
 *   [ ] Voice input/output capabilities.
 *   [ ] File upload & analysis.
 
