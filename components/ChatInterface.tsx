@@ -1,16 +1,10 @@
 'use client';
 
-import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Loader2, Send, Code, PenTool, Plane, Lightbulb, Bot } from "lucide-react";
+import { Loader2, Code, PenTool, Plane, Lightbulb, Bot } from "lucide-react";
 
 import ChatMessage, { Message } from "@/components/ChatMessage";
 import { useRouter } from "next/navigation";
@@ -18,11 +12,7 @@ import { useLanguage } from "@/components/LanguageContext";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { BackgroundAnimations } from "@/components/BackgroundAnimations";
 import { motion } from "framer-motion";
-
-// Form schema for the chat input
-const formSchema = z.object({
-    prompt: z.string().min(1), // Validation handled nicely in UI, no need for harsh text
-});
+import { ChatInput } from "./ChatInput";
 
 // Define the component's props
 interface ChatInterfaceProps {
@@ -34,6 +24,7 @@ export default function ChatInterface({ chatId: initialChatId, initialMessages =
     const [messages, setMessages] = useState<Message[]>(initialMessages);
     const [isLoading, setIsLoading] = useState(false);
     const [chatId, setChatId] = useState<string | undefined>(initialChatId);
+    const [suggestedPrompt, setSuggestedPrompt] = useState("");
     const router = useRouter();
     const { t, direction } = useLanguage();
 
@@ -56,20 +47,16 @@ export default function ChatInterface({ chatId: initialChatId, initialMessages =
         return () => clearTimeout(timer);
     }, [messages]);
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: { prompt: "" },
-    });
-
     // Handle form submission
-    async function onSubmit(values: z.infer<typeof formSchema>) {
+    const onSubmit = useCallback(async (values: { prompt: string }, reset: () => void) => {
         if (!values.prompt.trim()) return;
 
         setIsLoading(true);
 
         const userMessage: Message = { role: "user", content: values.prompt };
         setMessages((currentMessages) => [...currentMessages, userMessage]);
-        form.reset();
+        reset();
+        setSuggestedPrompt(""); // Clear suggestion
 
         const history = messages.map(msg => ({
             role: msg.role,
@@ -106,7 +93,7 @@ export default function ChatInterface({ chatId: initialChatId, initialMessages =
         } finally {
             setIsLoading(false);
         }
-    }
+    }, [messages, chatId, t, router]);
 
     return (
         <div className="flex flex-col h-full relative">
@@ -157,7 +144,7 @@ export default function ChatInterface({ chatId: initialChatId, initialMessages =
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: index * 0.1, duration: 0.4 }}
                                         onClick={() => {
-                                            form.setValue('prompt', item.prompt);
+                                            setSuggestedPrompt(item.prompt);
                                         }}
                                         className="flex items-center gap-4 p-4 rounded-xl border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 hover:border-zinc-700 transition-all text-left group backdrop-blur-sm"
                                     >
@@ -186,51 +173,7 @@ export default function ChatInterface({ chatId: initialChatId, initialMessages =
             </ScrollArea>
 
             {/* --- Input Form --- */}
-            <div className="p-4 pb-6 bg-gradient-to-t from-background via-background to-transparent z-10 w-full flex justify-center sticky bottom-0">
-                <div className="max-w-3xl w-full">
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="relative flex items-end gap-2 p-2 bg-secondary/50 dark:bg-zinc-900 border shadow-sm rounded-3xl focus-within:ring-2 focus-within:ring-primary/20 transition-all">
-                            <FormField
-                                control={form.control}
-                                name="prompt"
-                                render={({ field }) => (
-                                    <FormItem className="flex-1">
-                                        <FormControl>
-                                            <Textarea
-                                                placeholder={t('chat.placeholder')}
-                                                className="resize-none min-h-[44px] max-h-[200px] border-0 focus-visible:ring-0 bg-transparent text-base p-3 shadow-none scrollbar-hide w-full placeholder:text-muted-foreground"
-                                                {...field}
-                                                disabled={isLoading}
-                                                onKeyDown={(e) => {
-                                                    if (e.key === 'Enter' && !e.shiftKey) {
-                                                        e.preventDefault();
-                                                        form.handleSubmit(onSubmit)();
-                                                    }
-                                                }}
-                                            />
-                                        </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-                            <Button
-                                type="submit"
-                                size="icon"
-                                disabled={isLoading || !form.watch('prompt')}
-                                className="h-10 w-10 rounded-full shadow-sm mb-1 mr-1 transition-all hover:scale-105"
-                            >
-                                {isLoading ? (
-                                    <Loader2 className="h-5 w-5 animate-spin" />
-                                ) : (
-                                    <Send className="h-5 w-5" />
-                                )}
-                            </Button>
-                        </form>
-                    </Form>
-                    <div className="text-center text-[10px] text-muted-foreground mt-2 opacity-70">
-                        Vigilante can make mistakes. Consider checking important information.
-                    </div>
-                </div>
-            </div>
+            <ChatInput onSubmit={onSubmit} isLoading={isLoading} suggestedPrompt={suggestedPrompt} />
         </div>
     );
 }

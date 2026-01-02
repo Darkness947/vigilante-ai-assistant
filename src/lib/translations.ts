@@ -56,7 +56,7 @@ export const translations: Translations = {
         'footer.about': 'About',
         'footer.privacy': 'Privacy',
         'footer.terms': 'Terms',
-        'footer.copyright': '© 2025 Vigilante AI Assistant. All Rights Reserved.',
+        'footer.copyright': 'Vigilante AI Assistant. All Rights Reserved.',
 
         // Chat
         'chat.placeholder': 'Type your message...',
@@ -135,7 +135,7 @@ export const translations: Translations = {
         'footer.about': 'عن الموقع',
         'footer.privacy': 'الخصوصية',
         'footer.terms': 'الشروط',
-        'footer.copyright': '© 2025 مساعد فيجيلانتي الذكي. جميع الحقوق محفوظة.',
+        'footer.copyright': 'مساعد فيجيلانتي الذكي. جميع الحقوق محفوظة.',
 
         // Chat
         'chat.placeholder': 'اكتب رسالتك...',

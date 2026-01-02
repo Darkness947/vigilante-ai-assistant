@@ -8,6 +8,7 @@ import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { Bot, User, Check, Copy } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import React from 'react';
 import { Button } from "@/components/ui/button";
 
 export interface Message {
@@ -15,7 +16,7 @@ export interface Message {
     content: string;
 }
 
-export default function ChatMessage({ message: { role, content } }: { message: Message }) {
+export default React.memo(function ChatMessage({ message: { role, content } }: { message: Message }) {
     const isUser = role === 'user';
 
     return (
@@ -76,7 +77,7 @@ export default function ChatMessage({ message: { role, content } }: { message: M
             </div>
         </motion.div>
     );
-}
+});
 
 function CodeBlock({ language, value }: { language: string; value: string }) {
     const [isCopied, setIsCopied] = useState(false);
