@@ -1,6 +1,6 @@
 # Vigilante AI Assistant 🤖✨
 
-A premium, localized, and highly animated AI Assistant web interface built with **Next.js 14**, **TypeScript**, and **Tailwind CSS**.
+A premium, localized, and highly animated AI Assistant web interface built with **Next.js 16**, **TypeScript**, and **Tailwind CSS**.
 
 ## 🚀 Overview
 
