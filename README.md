@@ -8,14 +8,17 @@ Vigilante AI is designed to be a "Dark Mode First" experience, offering a sleek,
 
 ## ✨ Key Features
 
-*   **🎨 Premium UI**: Dark-themed aesthetic w/ rich gradients, glassmorphism, and noise textures.
-*   **🌍 Full Localization**: Native support for **English** and **Arabic**, including automatic RTL layout switching and specialized font handling.
+*   **⚡ Real-time Streaming AI**: Instantaneous responses powered by Google Gemini 2.5 Flash. No more waiting.
+*   **💎 Premium Glassmorphism UI**: A sleek, modern interface with frosted glass effects, smooth animations, and interactive depth.
+*   **📱 Mobile-First Design**: Fully optimized touch gestures, responsive layouts, and keyboard handling for a fluid mobile experience.
+*   **🌍 Bilingual Support**: Full English & Arabic (RTL) localization.
+*   **🔐 Secure Authentication**: NextAuth v5 integration with MongoDB.
+*   **🎨 Dynamic Theming**: Beautiful dark mode with rich gradients and ambient backgrounds.
 *   **⚡ Advanced Animations**:
     *   **3D Code Demo**: Interactive, mouse-tilt parallax effect (Desktop).
     *   **Typewriter Effect**: Dynamic, localized text cycling in the hero section.
     *   **Tech Marquee**: Infinite scrolling loop of technology icons with hardware acceleration.
     *   **Page Transitions**: Smooth staggered entrance animations for all elements.
-*   **📱 Mobile Optimized**:
     *   Responsive Navbar with Hamburger Menu.
     *   Performance-tuned animations (disabled 3D perspective & heavy blurs on mobile).
     *   Touch-friendly interactables.
@@ -24,7 +27,7 @@ Vigilante AI is designed to be a "Dark Mode First" experience, offering a sleek,
 
 ## 🛠️ Tech Stack
 
-*   **Framework**: [Next.js 14](https://nextjs.org/) (App Router)
+*   **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
 *   **Language**: [TypeScript](https://www.typescriptlang.org/)
 *   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 *   **Animations**: [Framer Motion](https://www.framer.com/motion/)

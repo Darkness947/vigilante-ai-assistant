@@ -47,17 +47,23 @@ export default function ChatInterface({ chatId: initialChatId, initialMessages =
         return () => clearTimeout(timer);
     }, [messages]);
 
-    // Handle form submission
+    // Handle form submission with STREAMING
     const onSubmit = useCallback(async (values: { prompt: string }, reset: () => void) => {
         if (!values.prompt.trim()) return;
 
         setIsLoading(true);
-
-        const userMessage: Message = { role: "user", content: values.prompt };
-        setMessages((currentMessages) => [...currentMessages, userMessage]);
         reset();
-        setSuggestedPrompt(""); // Clear suggestion
+        setSuggestedPrompt("");
 
+        // 1. Optimistic User Message
+        const userMessage: Message = { role: "user", content: values.prompt };
+
+        // 2. Placeholder AI Message (Empty at start)
+        const placeholderAiMessage: Message = { role: "model", content: "" };
+
+        setMessages((prev) => [...prev, userMessage, placeholderAiMessage]);
+
+        // Prepare History for API
         const history = messages.map(msg => ({
             role: msg.role,
             parts: [{ text: msg.content }],
@@ -74,22 +80,49 @@ export default function ChatInterface({ chatId: initialChatId, initialMessages =
                 }),
             });
 
-            if (!response.ok) {
-                throw new Error('API request failed');
+            if (!response.ok) throw new Error('API request failed');
+            if (!response.body) throw new Error('No response body');
+
+            // Handle New Chat ID
+            const newChatId = response.headers.get('X-Chat-Id');
+            if (newChatId && newChatId !== chatId) {
+                setChatId(newChatId);
+                window.history.replaceState(null, '', `/chat/${newChatId}`);
+                router.refresh(); // Refresh sidebar to show new chat
             }
 
-            const data = await response.json();
-            const aiMessage: Message = { role: "model", content: data.aiResponse };
-            setMessages((currentMessages) => [...currentMessages, aiMessage]);
+            // 3. Read Stream
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let aiContent = "";
 
-            if (!chatId) {
-                setChatId(data.chatId);
-                window.history.replaceState(null, '', `/chat/${data.chatId}`);
-                router.refresh();
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                const chunk = decoder.decode(value, { stream: true });
+                aiContent += chunk;
+
+                // 4. Update the LAST message (which is our placeholder)
+                setMessages((prev) => {
+                    const newMessages = [...prev];
+                    const lastIndex = newMessages.length - 1;
+                    // Check if we have messages and the last one is the model
+                    if (lastIndex >= 0 && newMessages[lastIndex].role === 'model') {
+                        // Create a NEW object reference to trigger React.memo re-render
+                        newMessages[lastIndex] = {
+                            ...newMessages[lastIndex],
+                            content: aiContent
+                        };
+                    }
+                    return newMessages;
+                });
             }
 
         } catch (error) {
             toast.error(t('chat.error'));
+            // Remove the placeholder if it failed completely? Or leave it with error text?
+            // For now, let's leave what we have or maybe indicate error in the message.
         } finally {
             setIsLoading(false);
         }

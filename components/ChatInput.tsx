@@ -40,10 +40,10 @@ export function ChatInput({ onSubmit, isLoading, suggestedPrompt }: ChatInputPro
     };
 
     return (
-        <div className="p-4 pb-6 bg-gradient-to-t from-background via-background to-transparent z-10 w-full flex justify-center sticky bottom-0">
-            <div className="max-w-3xl w-full">
+        <div className="p-4 pb-6 bg-gradient-to-t from-black via-black/80 to-transparent z-10 w-full flex justify-center sticky bottom-0 pointer-events-none">
+            <div className="max-w-3xl w-full pointer-events-auto">
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(handleSubmit)} className="relative flex items-end gap-2 p-2 bg-secondary/50 dark:bg-zinc-900 border shadow-sm rounded-3xl focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+                    <form onSubmit={form.handleSubmit(handleSubmit)} className="relative flex items-end gap-2 p-2 bg-zinc-900/60 backdrop-blur-xl border border-white/10 shadow-2xl rounded-[32px] focus-within:ring-1 focus-within:ring-purple-500/50 focus-within:border-purple-500/50 transition-all duration-300">
                         <FormField
                             control={form.control}
                             name="prompt"
